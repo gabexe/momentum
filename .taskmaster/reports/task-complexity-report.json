@@ -1,0 +1,93 @@
+{
+	"meta": {
+		"generatedAt": "2025-09-30T22:31:11.129Z",
+		"tasksAnalyzed": 10,
+		"totalTasks": 10,
+		"analysisCount": 10,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": false
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Configurar repositorio y CI/CD",
+			"complexityScore": 4,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Desglosar la configuración inicial del proyecto en: creación y estructura del repositorio, configuración de workflows de GitHub Actions con jobs separados para lint, test y deploy, e integración de servicios externos (Sentry, Vercel, variables de entorno)",
+			"reasoning": "Es una tarea de configuración estándar con documentación abundante, pero requiere coordinación de múltiples servicios"
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Implementar autenticación OAuth",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: configuración base de Passport.js, implementación de estrategia Google OAuth, generación y manejo de JWT con refresh tokens, middleware de autorización con roles, y endpoints de autenticación con validación de datos",
+			"reasoning": "Involucra seguridad crítica, manejo de tokens, integración con servicios externos y múltiples endpoints complejos"
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Diseñar esquema MongoDB",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Separar en: diseño de modelos y sus relaciones, configuración de índices para optimización, implementación de validaciones y middlewares de Mongoose, y pruebas de rendimiento de consultas",
+			"reasoning": "Requiere diseño cuidadoso de datos, consideraciones de rendimiento y conocimiento de patrones de base de datos NoSQL"
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Crear API de gestión de tareas",
+			"complexityScore": 5,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Dividir en: endpoints CRUD básicos con validación, implementación de filtros y paginación, y manejo de errores y respuestas consistentes",
+			"reasoning": "Patrones CRUD estándar pero requiere manejo cuidadoso de validaciones y casos edge"
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Implementar priorización con Gemini API",
+			"complexityScore": 8,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Separar en: diseño del servicio GeminiService con manejo de errores, construcción de prompts efectivos, implementación de caché y estrategia de invalidación, lógica de retry con backoff, y parsing seguro de respuestas JSON",
+			"reasoning": "Integración con IA externa implica manejo de APIs complejas, prompts sofisticados, optimización de costos y manejo de fallos"
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Desarrollar verificación por imagen",
+			"complexityScore": 9,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Dividir en: endpoint para recepción de imágenes y validación, integración con Gemini Pro Vision API, diseño de prompt de evaluación estricta, almacenamiento seguro en S3, actualización de estado con lógica de umbral, y manejo de diferentes formatos y tamaños de imagen",
+			"reasoning": "Combina manejo de archivos, integración con IA especializada, almacenamiento en cloud y lógica compleja de evaluación"
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Crear sistema de notificaciones push",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Separar en: configuración de Web Push API y gestión de permisos, diseño de plantillas de notificaciones, sistema de programación y cola de notificaciones, endpoint de preferencias y manejo de rechazos",
+			"reasoning": "Requiere manejo de APIs del navegador, diseño de mensajes efectivos y consideraciones de privacidad"
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Desarrollar sistema de gamificación",
+			"complexityScore": 7,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: lógica de cálculo de rachas y puntos, sistema de penalizaciones con deshabilitación de features, endpoint de estado y estadísticas, y recuperación post-penalización",
+			"reasoning": "Lógica de estado compleja con múltiples reglas de negocio y efectos secundarios en el sistema"
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Crear diálogo de retroalimentación con IA",
+			"complexityScore": 8,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Separar en: diseño del endpoint de conversación con manejo de sesión, mantenimiento de contexto conversacional, integración con Gemini para respuestas coherentes, límite de mensajes y control de flujo, y almacenamiento de historial completo",
+			"reasoning": "Conversaciones con IA requieren manejo sofisticado de contexto, estilo de respuesta consistente y almacenamiento eficiente"
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Desarrollar interfaz de usuario minimalista",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: estructura base con React y Tailwind, dashboard principal con componentes de tareas, formularios CRUD con validaciones, componente de carga de imagen con preview, y asegurar cumplimiento de accesibilidad WCAG 2.1",
+			"reasoning": "UI completa que requiere consideraciones de diseño, accesibilidad, responsive y experiencia de usuario"
+		}
+	]
+}

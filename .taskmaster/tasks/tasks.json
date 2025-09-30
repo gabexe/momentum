@@ -1,0 +1,655 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": "1",
+        "title": "Configurar repositorio y CI/CD",
+        "description": "Inicializar repo GitHub, configurar GitHub Actions para CI/CD y despliegue automático en Vercel",
+        "details": "- Crear repo privado en GitHub\n- Configurar workflows de GitHub Actions para lint, test y deploy\n- Integrar Sentry para monitoreo de errores\n- Configurar variables de entorno para Gemini API y MongoDB\n- Establecer protección de ramas main/develop",
+        "testStrategy": "Verificar que el pipeline ejecute sin errores y el deploy en Vercel sea exitoso",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Crear y estructurar el repositorio privado en GitHub",
+            "description": "Crear un repositorio privado en GitHub con la estructura inicial del proyecto, incluyendo archivos base como README.md y configuración básica.",
+            "dependencies": [],
+            "details": "- Crear repositorio privado en GitHub\n- Inicializar con README.md y estructura básica\n- Establecer protección de ramas main y develop",
+            "status": "in-progress",
+            "testStrategy": "",
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:19:00.458Z"
+          },
+          {
+            "id": 2,
+            "title": "Configurar workflows de GitHub Actions para CI/CD",
+            "description": "Configurar workflows separados en GitHub Actions para ejecutar lint, pruebas automatizadas y despliegue automático en Vercel.",
+            "dependencies": [],
+            "details": "- Crear jobs separados para lint, test y deploy\n- Configurar despliegue automático en Vercel\n- Verificar que el pipeline se ejecute sin errores",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Integrar servicios externos y variables de entorno",
+            "description": "Integrar Sentry para monitoreo de errores y configurar variables de entorno necesarias para Gemini API y MongoDB en el entorno de despliegue.",
+            "dependencies": [],
+            "details": "- Integrar Sentry para monitoreo de errores\n- Configurar variables de entorno para Gemini API y MongoDB\n- Validar integración y funcionamiento en el pipeline CI/CD",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ],
+        "updatedAt": "2025-09-30T23:19:00.458Z"
+      },
+      {
+        "id": "2",
+        "title": "Implementar autenticación OAuth",
+        "description": "Desarrollar sistema de autenticación con Google/Email usando JWT",
+        "details": "- Implementar endpoints /auth/login, /auth/register, /auth/refresh\n- Configurar Passport.js con estrategia Google OAuth\n- Generar JWT con expiración de 24h\n- Crear middleware de autorización con roles usuario/admin\n- Implementar refresh tokens seguros",
+        "testStrategy": "Probar flujo completo de login/registro y validar tokens en cada request protegida",
+        "priority": "high",
+        "dependencies": [
+          "1"
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configurar base de Passport.js",
+            "description": "Inicializar proyecto Node.js e instalar dependencias necesarias para Passport.js y Express, configurar servidor básico y sesiones.",
+            "dependencies": [],
+            "details": "Crear proyecto Node.js, instalar express, passport, passport-google-oauth, express-session y configurar servidor Express con manejo de sesiones para autenticación.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Implementar estrategia Google OAuth con Passport.js",
+            "description": "Configurar Passport.js para usar la estrategia Google OAuth, incluyendo creación de client ID y client secret en Google API Console y manejo de callback.",
+            "dependencies": [
+              "2.1"
+            ],
+            "details": "Registrar aplicación en Google API Console para obtener client ID y secret, configurar Passport con estrategia Google OAuth, definir rutas /auth/google y /auth/google/callback para login y callback.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Generar y manejar JWT con refresh tokens seguros",
+            "description": "Implementar generación de JWT con expiración de 24 horas y mecanismo seguro para refresh tokens, incluyendo endpoints para refresh y validación.",
+            "dependencies": [
+              "2.1"
+            ],
+            "details": "Crear funciones para emitir JWT con expiración, almacenar y validar refresh tokens de forma segura, implementar endpoint /auth/refresh para renovar tokens.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 4,
+            "title": "Crear middleware de autorización con roles usuario/admin",
+            "description": "Desarrollar middleware para proteger rutas según roles de usuario y administrador, validando JWT y permisos asociados.",
+            "dependencies": [
+              "2.3"
+            ],
+            "details": "Implementar middleware que extraiga y valide JWT, verifique roles y permita o deniegue acceso a rutas protegidas según rol usuario o admin.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 5,
+            "title": "Implementar endpoints de autenticación con validación de datos",
+            "description": "Desarrollar endpoints /auth/login, /auth/register y /auth/refresh con validación de datos de entrada y manejo de errores.",
+            "dependencies": [
+              "2.1",
+              "2.3",
+              "2.4"
+            ],
+            "details": "Crear rutas para login con email/password, registro de usuarios, y refresh de tokens, asegurando validación de datos y respuestas adecuadas.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "title": "Diseñar esquema MongoDB",
+        "description": "Crear modelos de datos para usuarios, tareas, logs de IA y sistema de gamificación",
+        "details": "- Modelo User: _id, email, name, role, createdAt, preferences\n- Modelo Task: _id, userId, title, description, dueDate, estimatedTime, energyLevel, status, completedAt, verificationImage\n- Modelo IALog: _id, userId, type, input, output, timestamp\n- Modelo Gamification: _id, userId, streak, points, penalties, lastActive",
+        "testStrategy": "Validar índices, relaciones y que las consultas comunes respondan <100ms",
+        "priority": "high",
+        "dependencies": [
+          "1"
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Diseñar modelos de datos y relaciones",
+            "description": "Crear los esquemas de MongoDB para los modelos User, Task, IALog y Gamification, definiendo campos, tipos de datos y relaciones entre colecciones.",
+            "dependencies": [],
+            "details": "Definir cada modelo con sus campos especificados (_id, email, name, etc.) y establecer referencias o embebidos según corresponda para optimizar consultas y mantener integridad.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Configurar índices para optimización",
+            "description": "Crear índices en los campos más consultados para mejorar el rendimiento de las consultas frecuentes en los modelos diseñados.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Analizar patrones de consulta para definir índices simples y compuestos en campos como userId, status, timestamp, y otros relevantes para acelerar búsquedas y filtrados.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Implementar validaciones y middlewares de Mongoose",
+            "description": "Agregar validaciones de esquema y middlewares para controlar la integridad de datos y lógica de negocio en los modelos MongoDB.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Definir validaciones de campos obligatorios, formatos, y reglas específicas; implementar middlewares para acciones previas o posteriores a guardados, actualizaciones o eliminaciones.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 4,
+            "title": "Realizar pruebas de rendimiento de consultas",
+            "description": "Evaluar el rendimiento de las consultas comunes para asegurar que respondan en menos de 100ms y ajustar índices o esquemas según resultados.",
+            "dependencies": [
+              "3.2",
+              "3.3"
+            ],
+            "details": "Ejecutar pruebas de carga y medir tiempos de respuesta en consultas típicas; optimizar esquemas o índices en base a los resultados para cumplir con los objetivos de rendimiento.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "title": "Crear API de gestión de tareas",
+        "description": "Desarrollar endpoints CRUD para tareas con validación de datos",
+        "details": "- GET /api/tasks - listar tareas del usuario con filtros\n- POST /api/tasks - crear tarea con validación de campos requeridos\n- PUT /api/tasks/:id - actualizar tarea\n- DELETE /api/tasks/:id - eliminar tarea\n- Implementar paginación y búsqueda",
+        "testStrategy": "Probar CRUD completo con casos edge y validar respuestas de error apropiadas",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Desarrollar endpoints CRUD básicos con validación",
+            "description": "Implementar los endpoints GET, POST, PUT y DELETE para la gestión de tareas, asegurando la validación de campos requeridos y tipos de datos en cada operación.",
+            "dependencies": [],
+            "details": "- GET /api/tasks: listar tareas del usuario\n- POST /api/tasks: crear tarea con validación de campos\n- PUT /api/tasks/:id: actualizar tarea con validación\n- DELETE /api/tasks/:id: eliminar tarea\n- Validar datos de entrada para evitar errores y asegurar integridad",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Implementar filtros y paginación en listado de tareas",
+            "description": "Agregar funcionalidad para filtrar tareas por criterios específicos y paginar resultados en el endpoint GET /api/tasks para mejorar la usabilidad y rendimiento.",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "- Añadir parámetros de consulta para filtros (estado, fecha, prioridad, etc.)\n- Implementar paginación con parámetros de página y tamaño\n- Optimizar consultas para manejar grandes volúmenes de datos",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Manejo de errores y respuestas consistentes",
+            "description": "Definir y aplicar un esquema uniforme para las respuestas de la API, incluyendo códigos de estado HTTP adecuados y mensajes de error claros para casos edge y validaciones fallidas.",
+            "dependencies": [
+              "4.1",
+              "4.2"
+            ],
+            "details": "- Establecer formato estándar para respuestas exitosas y errores\n- Manejar errores comunes como datos inválidos, recursos no encontrados y fallos internos\n- Probar respuestas para asegurar consistencia y claridad en la comunicación con el cliente",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "title": "Implementar priorización con Gemini API",
+        "description": "Integrar Gemini API para ordenar tareas según calendario, tiempo estimado y energía",
+        "details": "- Crear servicio GeminiService con método prioritizeTasks()\n- Construir prompt con contexto del usuario y tareas pendientes\n- Parsear respuesta JSON de Gemini con orden y justificaciones\n- Cachear resultados por 1 hora para optimizar costos\n- Implementar retry con backoff exponencial",
+        "testStrategy": "Validar que el cronograma generado no tenga conflictos y responda <5s",
+        "priority": "high",
+        "dependencies": [
+          "4"
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Diseñar servicio GeminiService con manejo de errores",
+            "description": "Definir la estructura del servicio GeminiService incluyendo el método prioritizeTasks(), asegurando manejo robusto de errores para llamadas a la API externa.",
+            "dependencies": [],
+            "details": "Crear la clase o módulo GeminiService que encapsule la lógica de integración con Gemini API. Implementar manejo de excepciones para errores de red, respuestas inválidas y fallos de la API. Definir interfaz clara para recibir tareas y contexto del usuario.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Construir prompts efectivos para priorización",
+            "description": "Desarrollar la construcción dinámica de prompts que incluyan contexto relevante del usuario y las tareas pendientes para enviar a Gemini API.",
+            "dependencies": [
+              "5.1"
+            ],
+            "details": "Diseñar la plantilla del prompt que integre información del calendario, tiempo estimado y nivel de energía. Asegurar que el prompt sea claro y optimizado para obtener respuestas útiles y justificadas de Gemini.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Implementar parsing seguro de respuestas JSON",
+            "description": "Desarrollar la lógica para interpretar y validar la respuesta JSON de Gemini, extrayendo el orden de tareas y las justificaciones de forma segura y confiable.",
+            "dependencies": [
+              "5.2"
+            ],
+            "details": "Crear funciones que validen la estructura del JSON recibido, manejen posibles errores de formato y extraigan los datos necesarios para la priorización. Garantizar que el sistema no falle ante respuestas inesperadas.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 4,
+            "title": "Implementar caché con estrategia de invalidación",
+            "description": "Diseñar e implementar un sistema de caché para almacenar resultados de priorización por 1 hora, optimizando costos y reduciendo llamadas a Gemini API.",
+            "dependencies": [
+              "5.3"
+            ],
+            "details": "Configurar almacenamiento temporal de resultados con expiración automática a 1 hora. Definir cuándo invalidar la caché ante cambios en las tareas o contexto del usuario para mantener datos actualizados.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 5,
+            "title": "Implementar retry con backoff exponencial",
+            "description": "Agregar lógica de reintentos automáticos con backoff exponencial para llamadas fallidas a Gemini API, mejorando la resiliencia ante errores temporales o límites de velocidad.",
+            "dependencies": [
+              "5.1"
+            ],
+            "details": "Configurar mecanismo que detecte fallos en la llamada a la API y realice reintentos con intervalos crecientes. Limitar número máximo de intentos para evitar ciclos infinitos y manejar adecuadamente los errores persistentes.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "title": "Desarrollar verificación por imagen",
+        "description": "Implementar análisis de imágenes con Gemini Pro Vision para validar completitud de tareas",
+        "details": "- Endpoint POST /api/tasks/:id/verify - recibe imagen base64\n- Llamar Gemini Vision con prompt de evaluación estricta\n- Parsear respuesta para obtener porcentaje y feedback\n- Guardar imagen y resultado en S3/CloudStorage\n- Actualizar estado de tarea según umbral de completitud",
+        "testStrategy": "Probar con imágenes variadas validando precisión >95% y feedback hipercrítico",
+        "priority": "high",
+        "dependencies": [
+          "4"
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Crear endpoint para recepción de imágenes",
+            "description": "Implementar endpoint POST /api/tasks/:id/verify para recibir imágenes en base64",
+            "dependencies": [],
+            "details": "Endpoint debe recibir imagen base64 y prepararla para análisis",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Integración con Gemini Pro Vision API",
+            "description": "Configurar llamada a Gemini Vision con prompt de evaluación estricta",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Usar API key de Gemini y configurar prompt para análisis de imágenes",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Diseño de prompt de evaluación estricta",
+            "description": "Crear un prompt que evalúe la completitud de tareas de manera estricta",
+            "dependencies": [
+              "6.2"
+            ],
+            "details": "Prompt debe ser claro y enfocado en la evaluación de completitud",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 4,
+            "title": "Almacenamiento seguro en S3/CloudStorage",
+            "description": "Guardar imagen y resultado en S3 o Cloud Storage",
+            "dependencies": [
+              "6.3"
+            ],
+            "details": "Configurar bucket en S3 o Cloud Storage para almacenar imágenes y resultados",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 5,
+            "title": "Actualización de estado con lógica de umbral",
+            "description": "Actualizar estado de tarea según umbral de completitud",
+            "dependencies": [
+              "6.4"
+            ],
+            "details": "Implementar lógica para actualizar el estado de la tarea basado en el resultado del análisis",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 6,
+            "title": "Manejo de diferentes formatos y tamaños de imagen",
+            "description": "Asegurar que el sistema maneje diferentes formatos y tamaños de imagen",
+            "dependencies": [
+              "6.5"
+            ],
+            "details": "Implementar validaciones y procesos para manejar variados formatos y tamaños de imagen",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ]
+      },
+      {
+        "id": "7",
+        "title": "Crear sistema de notificaciones push",
+        "description": "Implementar notificaciones web/móvil con tono exigente para recordatorios",
+        "details": "- Integrar Web Push API para navegadores compatibles\n- Crear plantillas de notificaciones con tono estricto\n- Programar notificaciones según cronograma de tareas\n- Implementar endpoint para gestionar preferencias de notificación\n- Manejar casos de rechazo de permisos",
+        "testStrategy": "Verificar recepción de notificaciones en múltiples dispositivos y navegadores",
+        "priority": "medium",
+        "dependencies": [
+          "5"
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configurar Web Push API y gestionar permisos",
+            "description": "Integrar la API de Web Push para navegadores compatibles y manejar la solicitud y rechazo de permisos de notificación por parte del usuario.",
+            "dependencies": [],
+            "details": "Investigar compatibilidad de navegadores y dispositivos, implementar suscripción a notificaciones push, gestionar tokens y permisos, y manejar casos de rechazo o revocación de permisos.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Diseñar plantillas de notificaciones con tono exigente",
+            "description": "Crear y definir plantillas de mensajes para las notificaciones push que utilicen un tono estricto y claro para los recordatorios.",
+            "dependencies": [],
+            "details": "Diseñar textos y formatos visuales para notificaciones que transmitan urgencia y exigencia, asegurando claridad y efectividad en la comunicación.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Implementar sistema de programación y cola de notificaciones",
+            "description": "Programar el envío de notificaciones push según el cronograma de tareas y gestionar una cola para el envío eficiente y ordenado.",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "Desarrollar lógica para programar notificaciones basadas en fechas y horas de tareas, manejar la cola de mensajes para evitar sobrecarga y asegurar entrega oportuna.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 4,
+            "title": "Crear endpoint para gestionar preferencias y manejar rechazos",
+            "description": "Desarrollar un endpoint API para que los usuarios puedan configurar sus preferencias de notificación y manejar adecuadamente los casos de rechazo de permisos.",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "Implementar API REST para actualizar preferencias de notificación, registrar estados de permisos y adaptar el sistema para respetar las decisiones del usuario.",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ]
+      },
+      {
+        "id": "8",
+        "title": "Desarrollar sistema de gamificación",
+        "description": "Implementar rachas, puntos y penalizaciones funcionales",
+        "details": "- Calcular racha diaria basada en completitud de tareas\n- Asignar puntos por tareas completadas y verificadas\n- Aplicar penalizaciones: deshabilitar features UI por 24h\n- Crear endpoint GET /api/gamification/status\n- Implementar lógica de recuperación de racha tras penalización",
+        "testStrategy": "Simular fallos de racha y verificar aplicación correcta de penalizaciones",
+        "priority": "medium",
+        "dependencies": [
+          "6"
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implementar lógica de cálculo de rachas y puntos",
+            "description": "Desarrollar la lógica para calcular rachas diarias basadas en la completitud de tareas y asignar puntos por tareas completadas y verificadas",
+            "dependencies": [],
+            "details": "Calcular racha diaria y asignar puntos según completitud de tareas",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Desarrollar sistema de penalizaciones",
+            "description": "Implementar penalizaciones que deshabiliten features UI por 24 horas",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Aplicar penalizaciones deshabilitando features UI por 24 horas",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Crear endpoint de estado y estadísticas",
+            "description": "Desarrollar el endpoint GET /api/gamification/status para mostrar el estado actual del sistema de gamificación",
+            "dependencies": [
+              "8.2"
+            ],
+            "details": "Crear endpoint para mostrar el estado actual del sistema de gamificación",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 4,
+            "title": "Implementar lógica de recuperación post-penalización",
+            "description": "Desarrollar la lógica para recuperar la racha tras una penalización",
+            "dependencies": [
+              "8.3"
+            ],
+            "details": "Implementar lógica para recuperar la racha tras una penalización",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ]
+      },
+      {
+        "id": "9",
+        "title": "Crear diálogo de retroalimentación con IA",
+        "description": "Implementar chat conversacional post-día con IA para análisis de rendimiento",
+        "details": "- Endpoint POST /api/feedback - inicia conversación\n- Mantener contexto de conversación en sesión\n- Guardar historial completo en IALog\n- Implementar límite de 10 mensajes por sesión\n- Incluir análisis de tareas falladas y sugerencias",
+        "testStrategy": "Validar que la conversación mantenga tono estricto y guarde historial",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Diseño del endpoint de conversación",
+            "description": "Crear endpoint POST /api/feedback para iniciar conversaciones",
+            "dependencies": [],
+            "details": "Implementar lógica para recibir y procesar mensajes iniciales de usuario",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Mantenimiento de contexto conversacional",
+            "description": "Desarrollar sistema para mantener contexto de conversación en sesión",
+            "dependencies": [
+              "9.1"
+            ],
+            "details": "Implementar almacenamiento de mensajes y contexto en sesión",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Integración con Gemini para respuestas coherentes",
+            "description": "Integrar Gemini API para análisis de tareas fallidas y sugerencias",
+            "dependencies": [
+              "9.2"
+            ],
+            "details": "Crear prompts para Gemini y procesar respuestas",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 4,
+            "title": "Implementación de límite de mensajes y control de flujo",
+            "description": "Implementar límite de 10 mensajes por sesión y controlar flujo de conversación",
+            "dependencies": [
+              "9.3"
+            ],
+            "details": "Desarrollar lógica para limitar mensajes y gestionar flujo conversacional",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 5,
+            "title": "Almacenamiento de historial completo en IALog",
+            "description": "Guardar historial completo de conversaciones en IALog",
+            "dependencies": [
+              "9.4"
+            ],
+            "details": "Implementar sistema para almacenar y recuperar historial de conversaciones",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ]
+      },
+      {
+        "id": "10",
+        "title": "Desarrollar interfaz de usuario minimalista",
+        "description": "Crear UI responsive con React y Tailwind siguiendo principios de diseño minimalista",
+        "details": "- Implementar dashboard principal con lista de tareas priorizadas\n- Crear formularios para CRUD de tareas con validación client-side\n- Desarrollar componente de carga de imagen para verificación\n- Implementar indicadores visuales de racha y penalizaciones\n- Asegurar cumplimiento WCAG 2.1 Level AA",
+        "testStrategy": "Probar en múltiples dispositivos y validar con herramientas de accesibilidad",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configurar estructura base con React y Tailwind",
+            "description": "Crear la estructura inicial del proyecto con React y Tailwind CSS",
+            "dependencies": [],
+            "details": "Instalar dependencias necesarias, configurar Tailwind CSS y crear componentes básicos",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Implementar dashboard principal con componentes de tareas",
+            "description": "Desarrollar el dashboard principal con lista de tareas priorizadas",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Crear componentes para mostrar tareas y priorizarlas",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Crear formularios CRUD con validaciones",
+            "description": "Desarrollar formularios para crear, leer, actualizar y eliminar tareas con validación client-side",
+            "dependencies": [
+              "10.2"
+            ],
+            "details": "Implementar formularios con validaciones para asegurar datos correctos",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 4,
+            "title": "Desarrollar componente de carga de imagen con preview",
+            "description": "Crear un componente para cargar imágenes y mostrar un preview",
+            "dependencies": [
+              "10.3"
+            ],
+            "details": "Implementar carga de imágenes y mostrar un preview antes de subir",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          },
+          {
+            "id": 5,
+            "title": "Asegurar cumplimiento de accesibilidad WCAG 2.1",
+            "description": "Garantizar que la interfaz cumpla con los estándares de accesibilidad WCAG 2.1 Level AA",
+            "dependencies": [
+              "10.4"
+            ],
+            "details": "Probar en múltiples dispositivos y validar con herramientas de accesibilidad",
+            "status": "pending",
+            "testStrategy": "",
+            "parentId": "undefined"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "version": "1.0.0",
+      "lastModified": "2025-09-30T23:19:00.460Z",
+      "taskCount": 10,
+      "completedCount": 0,
+      "tags": [
+        "master"
+      ]
+    }
+  }
+}
