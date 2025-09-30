@@ -12,9 +12,33 @@ function validateTask(data) {
 let tasks = [];
 let idCounter = 1;
 
-// GET /api/tasks
+// GET /api/tasks con filtros y paginación
 router.get('/', (req, res) => {
-  res.json(tasks);
+  let filtered = [...tasks];
+  // Filtros: estado (completed), prioridad, fecha (simulada)
+  if (req.query.completed !== undefined) {
+    const completed = req.query.completed === 'true';
+    filtered = filtered.filter(t => t.completed === completed);
+  }
+  if (req.query.priority) {
+    filtered = filtered.filter(t => t.priority === req.query.priority);
+  }
+  // Filtro por fecha (simulado, si existiera t.date)
+  if (req.query.date) {
+    filtered = filtered.filter(t => t.date === req.query.date);
+  }
+  // Paginación
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+  const paginated = filtered.slice(start, end);
+  res.json({
+    total: filtered.length,
+    page,
+    pageSize,
+    tasks: paginated
+  });
 });
 
 // POST /api/tasks
