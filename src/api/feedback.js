@@ -8,6 +8,7 @@ const sessionContext = {};
 
 const GeminiService = require('../services/GeminiService');
 const Task = require('../models/Task');
+const IALog = require('../models/IALog');
 
 // POST /api/feedback - inicia o continúa conversación
 router.post('/', async (req, res) => {
@@ -24,6 +25,13 @@ router.post('/', async (req, res) => {
   }
   // Lógica de límite de mensajes (máx 10 por sesión)
   if (sessionContext[userId].length >= 20) { // 10 usuario + 10 IA
+    // Registrar en IALog el intento de mensaje fuera de límite
+    await IALog.create({
+      userId,
+      type: 'error',
+      input: { message, context: sessionContext[userId] },
+      output: { error: 'Límite de mensajes alcanzado' }
+    });
     return res.status(200).json({
       aiResponse: 'Has alcanzado el límite de 10 mensajes en esta sesión de feedback. Si necesitas más ayuda, inicia una nueva sesión.',
       context: sessionContext[userId],
@@ -32,6 +40,13 @@ router.post('/', async (req, res) => {
   }
   // Guardar mensaje en contexto
   sessionContext[userId].push({ role: 'user', content: message });
+  // Registrar input usuario en IALog
+  await IALog.create({
+    userId,
+    type: 'prompt',
+    input: { message, context: sessionContext[userId].slice(0, -1) },
+    output: null
+  });
 
   // Obtener tareas fallidas del usuario (últimas 24h)
   const since = new Date(Date.now() - 24 * 60 * 60 * 1000);
@@ -53,6 +68,13 @@ router.post('/', async (req, res) => {
   }
   // Guardar respuesta en contexto
   sessionContext[userId].push({ role: 'ai', content: aiResponse });
+  // Registrar output IA en IALog
+  await IALog.create({
+    userId,
+    type: 'completion',
+    input: { message, context: sessionContext[userId].slice(0, -1) },
+    output: { aiResponse }
+  });
   return res.status(200).json({ aiResponse, context: sessionContext[userId] });
 });
 
