@@ -1,6 +1,24 @@
 const express = require('express');
 const router = express.Router();
 
+// Endpoint para verificación de tarea por imagen (base64)
+const { Types } = require('mongoose');
+
+// POST /api/tasks/:id/verify
+router.post('/:id/verify', async (req, res) => {
+  const { id } = req.params;
+  const { imageBase64 } = req.body;
+  if (!Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'ID de tarea inválido' });
+  }
+  if (!imageBase64 || typeof imageBase64 !== 'string') {
+    return res.status(400).json({ error: 'Imagen base64 requerida' });
+  }
+  // Aquí se integrará la lógica de análisis Gemini Vision en la siguiente subtarea
+  return res.status(202).json({ message: 'Imagen recibida para verificación', taskId: id });
+});
+
+
 // Validación simple de datos
 function validateTask(data) {
   if (!data.title || typeof data.title !== 'string') return false;
