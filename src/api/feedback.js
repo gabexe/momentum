@@ -22,6 +22,14 @@ router.post('/', async (req, res) => {
   if (!sessionContext[userId]) {
     sessionContext[userId] = [];
   }
+  // Lógica de límite de mensajes (máx 10 por sesión)
+  if (sessionContext[userId].length >= 20) { // 10 usuario + 10 IA
+    return res.status(200).json({
+      aiResponse: 'Has alcanzado el límite de 10 mensajes en esta sesión de feedback. Si necesitas más ayuda, inicia una nueva sesión.',
+      context: sessionContext[userId],
+      sessionEnded: true
+    });
+  }
   // Guardar mensaje en contexto
   sessionContext[userId].push({ role: 'user', content: message });
 
