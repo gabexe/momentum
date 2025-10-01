@@ -1,5 +1,39 @@
 // Simple cache en memoria para priorización
 class GeminiService {
+
+  /**
+   * Analiza una imagen usando Gemini Pro Vision API
+   * @param {string} imageBase64 - Imagen en base64
+   * @param {string} prompt - Prompt de evaluación
+   * @returns {Promise<Object>} - Resultado de Gemini Vision
+   */
+  async analyzeImageWithVision(imageBase64, prompt) {
+    try {
+      const response = await axios.post(
+        process.env.GEMINI_VISION_URL || 'https://api.gemini.com/vision',
+        {
+          image: imageBase64,
+          prompt
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          timeout: 10000
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        throw new Error(`Gemini Vision error: ${error.response.status} - ${error.response.data?.message || error.response.statusText}`);
+      } else if (error.request) {
+        throw new Error('No se recibió respuesta de Gemini Vision');
+      } else {
+        throw new Error(`Error al llamar Gemini Vision: ${error.message}`);
+      }
+    }
+  }
   /**
    * Llama a Gemini API con retry y backoff exponencial
    * @param {Array} tasks
