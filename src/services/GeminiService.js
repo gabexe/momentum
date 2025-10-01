@@ -2,6 +2,16 @@
 class GeminiService {
 
   /**
+   * Genera un prompt estricto para evaluación de completitud de tareas por imagen
+   * @param {string} descripcionTarea - Descripción de la tarea a verificar
+   * @returns {string} - Prompt para Gemini Vision
+   */
+  static buildStrictVisionPrompt(descripcionTarea) {
+    return `Evalúa la imagen recibida y determina el porcentaje de completitud de la siguiente tarea: "${descripcionTarea}". 
+Responde solo en JSON con dos campos: "completitud" (número entre 0 y 100) y "feedback" (texto hipercrítico y detallado sobre lo que falta o está mal). Sé estricto y no asumas éxito si hay dudas.`;
+  }
+
+  /**
    * Analiza una imagen usando Gemini Pro Vision API
    * @param {string} imageBase64 - Imagen en base64
    * @param {string} prompt - Prompt de evaluación
