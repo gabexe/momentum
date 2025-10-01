@@ -6,6 +6,9 @@ const { Types } = require('mongoose');
 // Memoria simple de contexto conversacional (por userId, para demo)
 const sessionContext = {};
 
+const GeminiService = require('../services/GeminiService');
+const Task = require('../models/Task');
+
 // POST /api/feedback - inicia o continúa conversación
 router.post('/', async (req, res) => {
   const { userId, message } = req.body;
@@ -21,9 +24,28 @@ router.post('/', async (req, res) => {
   }
   // Guardar mensaje en contexto
   sessionContext[userId].push({ role: 'user', content: message });
-  // Limitar a 10 mensajes por sesión (se implementará control en subtarea 9.4)
-  // Aquí se integrará Gemini en la siguiente subtarea
-  return res.status(200).json({ message: 'Mensaje recibido', context: sessionContext[userId] });
+
+  // Obtener tareas fallidas del usuario (últimas 24h)
+  const since = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const failedTasks = await Task.find({ userId, status: { $ne: 'done' }, updatedAt: { $gte: since } });
+  const failedSummary = failedTasks.map(t => `- ${t.title}: ${t.description || ''}`).join('\n');
+
+  // Construir prompt para Gemini
+  const prompt = `Eres un coach hipercrítico. Analiza el siguiente mensaje del usuario y su desempeño diario.\n\nTareas fallidas hoy:\n${failedSummary || 'Ninguna'}\n\nHistorial de conversación:\n${sessionContext[userId].map(m => m.role+': '+m.content).join('\n')}\n\nResponde con feedback estricto, sugerencias y preguntas para mejorar el rendimiento.`;
+
+  // Llamar Gemini API
+  const gemini = new GeminiService();
+  let aiResponse;
+  try {
+    aiResponse = await gemini.prioritizeTasks([{ title: 'feedback', description: prompt }], {});
+    // Simulación: usar el campo 'order' o 'justifications' como respuesta
+    aiResponse = aiResponse.justifications ? aiResponse.justifications[0] : JSON.stringify(aiResponse);
+  } catch (err) {
+    aiResponse = 'No se pudo obtener respuesta de IA: ' + err.message;
+  }
+  // Guardar respuesta en contexto
+  sessionContext[userId].push({ role: 'ai', content: aiResponse });
+  return res.status(200).json({ aiResponse, context: sessionContext[userId] });
 });
 
 module.exports = router;
