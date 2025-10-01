@@ -474,7 +474,7 @@
             "description": "Desarrollar la lógica para calcular rachas diarias basadas en la completitud de tareas y asignar puntos por tareas completadas y verificadas",
             "dependencies": [],
             "details": "Calcular racha diaria y asignar puntos según completitud de tareas",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -486,7 +486,7 @@
               "8.1"
             ],
             "details": "Aplicar penalizaciones deshabilitando features UI por 24 horas",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -667,7 +667,7 @@
       ],
       "created": "2025-10-01T00:00:03.002Z",
       "description": "Tasks for master context",
-      "updated": "2025-10-01T01:22:46.294Z"
+      "updated": "2025-10-01T01:24:30.180Z"
     }
   }
 }

@@ -17,6 +17,9 @@ class GamificationService {
     if (diff < 1.5 && diff > 0.5) {
       gam.streak += 1;
     } else if (diff > 1.5) {
+      // Penalización por perder la racha
+      const PenaltyService = require('./PenaltyService');
+      await PenaltyService.applyPenalty(userId);
       gam.streak = 1;
     } else if (gam.streak === 0) {
       gam.streak = 1;
