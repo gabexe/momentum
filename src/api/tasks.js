@@ -5,6 +5,10 @@ const router = express.Router();
 const { Types } = require('mongoose');
 
 // POST /api/tasks/:id/verify
+const GeminiService = require('../services/GeminiService');
+const S3Service = require('../services/S3Service');
+const Task = require('../models/Task');
+
 router.post('/:id/verify', async (req, res) => {
   const { id } = req.params;
   const { imageBase64 } = req.body;
@@ -14,8 +18,42 @@ router.post('/:id/verify', async (req, res) => {
   if (!imageBase64 || typeof imageBase64 !== 'string') {
     return res.status(400).json({ error: 'Imagen base64 requerida' });
   }
-  // Aquí se integrará la lógica de análisis Gemini Vision en la siguiente subtarea
-  return res.status(202).json({ message: 'Imagen recibida para verificación', taskId: id });
+  // Validar tamaño y formato (solo PNG, <5MB)
+  const sizeBytes = Buffer.byteLength(imageBase64, 'base64');
+  if (sizeBytes > 5 * 1024 * 1024) {
+    return res.status(400).json({ error: 'La imagen excede 5MB' });
+  }
+  // Buscar tarea y descripción
+  const task = await Task.findById(id);
+  if (!task) return res.status(404).json({ error: 'Tarea no encontrada' });
+  // Guardar imagen en S3
+  const imageKey = `tasks/${id}/image_${Date.now()}.png`;
+  const imageUrl = await S3Service.uploadImage(imageKey, imageBase64);
+  // Construir prompt y analizar con Gemini Vision
+  const prompt = GeminiService.buildStrictVisionPrompt(task.description || task.title);
+  const gemini = new GeminiService();
+  let visionResult;
+  try {
+    visionResult = await gemini.analyzeImageWithVision(imageBase64, prompt);
+  } catch (err) {
+    return res.status(502).json({ error: 'Error en Gemini Vision', details: err.message });
+  }
+  // Guardar resultado en S3
+  const resultKey = `tasks/${id}/result_${Date.now()}.json`;
+  const resultUrl = await S3Service.uploadResult(resultKey, visionResult);
+  // Actualizar estado de la tarea si completitud >= 90
+  if (typeof visionResult.completitud === 'number' && visionResult.completitud >= 90) {
+    task.status = 'done';
+    await task.save();
+  }
+  return res.status(200).json({
+    message: 'Verificación procesada',
+    imageUrl,
+    resultUrl,
+    completitud: visionResult.completitud,
+    feedback: visionResult.feedback,
+    taskStatus: task.status
+  });
 });
 
 
