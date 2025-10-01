@@ -18,16 +18,24 @@ router.post('/:id/verify', async (req, res) => {
   if (!imageBase64 || typeof imageBase64 !== 'string') {
     return res.status(400).json({ error: 'Imagen base64 requerida' });
   }
-  // Validar tamaño y formato (solo PNG, <5MB)
+  // Validar tamaño y formato (PNG, JPG, JPEG, <5MB)
   const sizeBytes = Buffer.byteLength(imageBase64, 'base64');
   if (sizeBytes > 5 * 1024 * 1024) {
     return res.status(400).json({ error: 'La imagen excede 5MB' });
+  }
+  // Detectar formato por cabecera base64
+  let ext = 'png';
+  if (imageBase64.startsWith('/9j/')) ext = 'jpg';
+  if (imageBase64.startsWith('iVBOR')) ext = 'png';
+  if (imageBase64.startsWith('/+')) ext = 'jpeg';
+  if (!['png', 'jpg', 'jpeg'].includes(ext)) {
+    return res.status(400).json({ error: 'Formato de imagen no soportado (solo PNG, JPG, JPEG)' });
   }
   // Buscar tarea y descripción
   const task = await Task.findById(id);
   if (!task) return res.status(404).json({ error: 'Tarea no encontrada' });
   // Guardar imagen en S3
-  const imageKey = `tasks/${id}/image_${Date.now()}.png`;
+  const imageKey = `tasks/${id}/image_${Date.now()}.${ext}`;
   const imageUrl = await S3Service.uploadImage(imageKey, imageBase64);
   // Construir prompt y analizar con Gemini Vision
   const prompt = GeminiService.buildStrictVisionPrompt(task.description || task.title);
