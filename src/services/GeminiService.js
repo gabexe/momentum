@@ -1,5 +1,26 @@
 // Simple cache en memoria para priorización
 class GeminiService {
+  /**
+   * Llama a Gemini API con retry y backoff exponencial
+   * @param {Array} tasks
+   * @param {Object} userContext
+   * @param {number} maxRetries
+   * @returns {Promise<Object>}
+   */
+  async prioritizeTasksWithRetry(tasks, userContext, maxRetries = 3) {
+    let attempt = 0;
+    let delay = 1000;
+    while (attempt < maxRetries) {
+      try {
+        return await this.prioritizeTasks(tasks, userContext);
+      } catch (err) {
+        attempt++;
+        if (attempt >= maxRetries) throw new Error(`Gemini API falló tras ${maxRetries} intentos: ${err.message}`);
+        await new Promise(res => setTimeout(res, delay));
+        delay *= 2;
+      }
+    }
+  }
   constructor(apiKey) {
     this.apiKey = apiKey || process.env.GEMINI_API_KEY;
     this.baseUrl = process.env.GEMINI_API_URL || 'https://api.gemini.com/prioritize';
