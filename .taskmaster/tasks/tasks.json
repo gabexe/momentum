@@ -416,7 +416,7 @@
             "description": "Integrar la API de Web Push para navegadores compatibles y manejar la solicitud y rechazo de permisos de notificación por parte del usuario.",
             "dependencies": [],
             "details": "Investigar compatibilidad de navegadores y dispositivos, implementar suscripción a notificaciones push, gestionar tokens y permisos, y manejar casos de rechazo o revocación de permisos.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -426,7 +426,7 @@
             "description": "Crear y definir plantillas de mensajes para las notificaciones push que utilicen un tono estricto y claro para los recordatorios.",
             "dependencies": [],
             "details": "Diseñar textos y formatos visuales para notificaciones que transmitan urgencia y exigencia, asegurando claridad y efectividad en la comunicación.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -438,7 +438,7 @@
               "7.1"
             ],
             "details": "Desarrollar lógica para programar notificaciones basadas en fechas y horas de tareas, manejar la cola de mensajes para evitar sobrecarga y asegurar entrega oportuna.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -450,7 +450,7 @@
               "7.1"
             ],
             "details": "Implementar API REST para actualizar preferencias de notificación, registrar estados de permisos y adaptar el sistema para respetar las decisiones del usuario.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "",
             "parentId": "undefined"
           }
@@ -667,7 +667,7 @@
       ],
       "created": "2025-10-01T00:00:03.002Z",
       "description": "Tasks for master context",
-      "updated": "2025-10-01T01:16:45.570Z"
+      "updated": "2025-10-01T01:20:20.246Z"
     }
   }
 }
