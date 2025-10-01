@@ -450,7 +450,7 @@
               "7.1"
             ],
             "details": "Implementar API REST para actualizar preferencias de notificación, registrar estados de permisos y adaptar el sistema para respetar las decisiones del usuario.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           }
@@ -474,7 +474,7 @@
             "description": "Desarrollar la lógica para calcular rachas diarias basadas en la completitud de tareas y asignar puntos por tareas completadas y verificadas",
             "dependencies": [],
             "details": "Calcular racha diaria y asignar puntos según completitud de tareas",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -667,7 +667,7 @@
       ],
       "created": "2025-10-01T00:00:03.002Z",
       "description": "Tasks for master context",
-      "updated": "2025-10-01T01:20:20.246Z"
+      "updated": "2025-10-01T01:22:46.294Z"
     }
   }
 }

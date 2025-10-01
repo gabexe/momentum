@@ -8,6 +8,7 @@ const { Types } = require('mongoose');
 const GeminiService = require('../services/GeminiService');
 const S3Service = require('../services/S3Service');
 const Task = require('../models/Task');
+const GamificationService = require('../services/GamificationService');
 
 router.post('/:id/verify', async (req, res) => {
   const { id } = req.params;
@@ -53,6 +54,8 @@ router.post('/:id/verify', async (req, res) => {
   if (typeof visionResult.completitud === 'number' && visionResult.completitud >= 90) {
     task.status = 'done';
     await task.save();
+    // Actualizar gamificación
+    await GamificationService.onTaskCompleted(task.userId);
   }
   return res.status(200).json({
     message: 'Verificación procesada',
