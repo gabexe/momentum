@@ -498,7 +498,7 @@
               "8.2"
             ],
             "details": "Crear endpoint para mostrar el estado actual del sistema de gamificación",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -510,7 +510,7 @@
               "8.3"
             ],
             "details": "Implementar lógica para recuperar la racha tras una penalización",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "",
             "parentId": "undefined"
           }
@@ -667,7 +667,7 @@
       ],
       "created": "2025-10-01T00:00:03.002Z",
       "description": "Tasks for master context",
-      "updated": "2025-10-01T01:25:26.095Z"
+      "updated": "2025-10-01T01:25:54.197Z"
     }
   }
 }
