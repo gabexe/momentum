@@ -1,3 +1,14 @@
+  /**
+   * Construye un prompt efectivo para priorización de tareas
+   * @param {Array} tasks - Lista de tareas
+   * @param {Object} userContext - Contexto del usuario
+   * @returns {String} - Prompt listo para Gemini API
+   */
+  static buildPrompt(tasks, userContext) {
+    const resumenTareas = tasks.map((t, i) => `Tarea ${i+1}: ${t.title} (estimado: ${t.estimatedTime}min, energía: ${t.energyLevel || 'N/A'})`).join('\n');
+    const contexto = `Usuario: ${userContext.name || 'N/A'}\nCalendario: ${userContext.calendar || 'N/A'}\nNivel de energía: ${userContext.energyLevel || 'N/A'}`;
+    return `Contexto:\n${contexto}\n\nTareas pendientes:\n${resumenTareas}\n\nPrioriza las tareas considerando calendario, tiempo estimado y energía. Devuelve un JSON con el orden y justificación de cada tarea.`;
+  }
 // src/services/GeminiService.js
 // Servicio para integración con Gemini API y priorización de tareas
 
@@ -39,6 +50,18 @@ class GeminiService {
         throw new Error(`Error al llamar Gemini API: ${error.message}`);
       }
     }
+  }
+
+  /**
+   * Construye un prompt efectivo para priorización de tareas
+   * @param {Array} tasks - Lista de tareas
+   * @param {Object} userContext - Contexto del usuario
+   * @returns {String} - Prompt listo para Gemini API
+   */
+  static buildPrompt(tasks, userContext) {
+    const resumenTareas = tasks.map((t, i) => `Tarea ${i+1}: ${t.title} (estimado: ${t.estimatedTime}min, energía: ${t.energyLevel || 'N/A'})`).join('\n');
+    const contexto = `Usuario: ${userContext.name || 'N/A'}\nCalendario: ${userContext.calendar || 'N/A'}\nNivel de energía: ${userContext.energyLevel || 'N/A'}`;
+    return `Contexto:\n${contexto}\n\nTareas pendientes:\n${resumenTareas}\n\nPrioriza las tareas considerando calendario, tiempo estimado y energía. Devuelve un JSON con el orden y justificación de cada tarea.`;
   }
 }
 
