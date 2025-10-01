@@ -2,14 +2,14 @@
   "master": {
     "tasks": [
       {
-        "id": "1",
+        "id": 1,
         "title": "Configurar repositorio y CI/CD",
         "description": "Inicializar repo GitHub, configurar GitHub Actions para CI/CD y despliegue automático en Vercel",
         "details": "- Crear repo privado en GitHub\n- Configurar workflows de GitHub Actions para lint, test y deploy\n- Integrar Sentry para monitoreo de errores\n- Configurar variables de entorno para Gemini API y MongoDB\n- Establecer protección de ramas main/develop",
         "testStrategy": "Verificar que el pipeline ejecute sin errores y el deploy en Vercel sea exitoso",
         "priority": "high",
         "dependencies": [],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -17,10 +17,10 @@
             "description": "Crear un repositorio privado en GitHub con la estructura inicial del proyecto, incluyendo archivos base como README.md y configuración básica.",
             "dependencies": [],
             "details": "- Crear repositorio privado en GitHub\n- Inicializar con README.md y estructura básica\n- Establecer protección de ramas main y develop",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined",
-            "updatedAt": "2025-09-30T23:19:00.458Z"
+            "updatedAt": "2025-09-30T23:26:49.392Z"
           },
           {
             "id": 2,
@@ -28,9 +28,10 @@
             "description": "Configurar workflows separados en GitHub Actions para ejecutar lint, pruebas automatizadas y despliegue automático en Vercel.",
             "dependencies": [],
             "details": "- Crear jobs separados para lint, test y deploy\n- Configurar despliegue automático en Vercel\n- Verificar que el pipeline se ejecute sin errores",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:29:43.675Z"
           },
           {
             "id": 3,
@@ -38,15 +39,16 @@
             "description": "Integrar Sentry para monitoreo de errores y configurar variables de entorno necesarias para Gemini API y MongoDB en el entorno de despliegue.",
             "dependencies": [],
             "details": "- Integrar Sentry para monitoreo de errores\n- Configurar variables de entorno para Gemini API y MongoDB\n- Validar integración y funcionamiento en el pipeline CI/CD",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:31:28.324Z"
           }
         ],
-        "updatedAt": "2025-09-30T23:19:00.458Z"
+        "updatedAt": "2025-09-30T23:31:28.324Z"
       },
       {
-        "id": "2",
+        "id": 2,
         "title": "Implementar autenticación OAuth",
         "description": "Desarrollar sistema de autenticación con Google/Email usando JWT",
         "details": "- Implementar endpoints /auth/login, /auth/register, /auth/refresh\n- Configurar Passport.js con estrategia Google OAuth\n- Generar JWT con expiración de 24h\n- Crear middleware de autorización con roles usuario/admin\n- Implementar refresh tokens seguros",
@@ -55,7 +57,7 @@
         "dependencies": [
           "1"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -63,9 +65,10 @@
             "description": "Inicializar proyecto Node.js e instalar dependencias necesarias para Passport.js y Express, configurar servidor básico y sesiones.",
             "dependencies": [],
             "details": "Crear proyecto Node.js, instalar express, passport, passport-google-oauth, express-session y configurar servidor Express con manejo de sesiones para autenticación.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:40:09.060Z"
           },
           {
             "id": 2,
@@ -75,9 +78,10 @@
               "2.1"
             ],
             "details": "Registrar aplicación en Google API Console para obtener client ID y secret, configurar Passport con estrategia Google OAuth, definir rutas /auth/google y /auth/google/callback para login y callback.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:42:16.215Z"
           },
           {
             "id": 3,
@@ -87,9 +91,10 @@
               "2.1"
             ],
             "details": "Crear funciones para emitir JWT con expiración, almacenar y validar refresh tokens de forma segura, implementar endpoint /auth/refresh para renovar tokens.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:46:33.671Z"
           },
           {
             "id": 4,
@@ -99,9 +104,10 @@
               "2.3"
             ],
             "details": "Implementar middleware que extraiga y valide JWT, verifique roles y permita o deniegue acceso a rutas protegidas según rol usuario o admin.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:48:01.995Z"
           },
           {
             "id": 5,
@@ -113,14 +119,16 @@
               "2.4"
             ],
             "details": "Crear rutas para login con email/password, registro de usuarios, y refresh de tokens, asegurando validación de datos y respuestas adecuadas.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:48:39.216Z"
           }
-        ]
+        ],
+        "updatedAt": "2025-09-30T23:48:39.216Z"
       },
       {
-        "id": "3",
+        "id": 3,
         "title": "Diseñar esquema MongoDB",
         "description": "Crear modelos de datos para usuarios, tareas, logs de IA y sistema de gamificación",
         "details": "- Modelo User: _id, email, name, role, createdAt, preferences\n- Modelo Task: _id, userId, title, description, dueDate, estimatedTime, energyLevel, status, completedAt, verificationImage\n- Modelo IALog: _id, userId, type, input, output, timestamp\n- Modelo Gamification: _id, userId, streak, points, penalties, lastActive",
@@ -129,7 +137,7 @@
         "dependencies": [
           "1"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -137,9 +145,10 @@
             "description": "Crear los esquemas de MongoDB para los modelos User, Task, IALog y Gamification, definiendo campos, tipos de datos y relaciones entre colecciones.",
             "dependencies": [],
             "details": "Definir cada modelo con sus campos especificados (_id, email, name, etc.) y establecer referencias o embebidos según corresponda para optimizar consultas y mantener integridad.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:52:09.325Z"
           },
           {
             "id": 2,
@@ -149,9 +158,10 @@
               "3.1"
             ],
             "details": "Analizar patrones de consulta para definir índices simples y compuestos en campos como userId, status, timestamp, y otros relevantes para acelerar búsquedas y filtrados.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:56:32.508Z"
           },
           {
             "id": 3,
@@ -161,7 +171,7 @@
               "3.1"
             ],
             "details": "Definir validaciones de campos obligatorios, formatos, y reglas específicas; implementar middlewares para acciones previas o posteriores a guardados, actualizaciones o eliminaciones.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -174,21 +184,22 @@
               "3.3"
             ],
             "details": "Ejecutar pruebas de carga y medir tiempos de respuesta en consultas típicas; optimizar esquemas o índices en base a los resultados para cumplir con los objetivos de rendimiento.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           }
-        ]
+        ],
+        "updatedAt": "2025-09-30T23:56:32.508Z"
       },
       {
-        "id": "4",
+        "id": 4,
         "title": "Crear API de gestión de tareas",
         "description": "Desarrollar endpoints CRUD para tareas con validación de datos",
         "details": "- GET /api/tasks - listar tareas del usuario con filtros\n- POST /api/tasks - crear tarea con validación de campos requeridos\n- PUT /api/tasks/:id - actualizar tarea\n- DELETE /api/tasks/:id - eliminar tarea\n- Implementar paginación y búsqueda",
         "testStrategy": "Probar CRUD completo con casos edge y validar respuestas de error apropiadas",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -196,9 +207,10 @@
             "description": "Implementar los endpoints GET, POST, PUT y DELETE para la gestión de tareas, asegurando la validación de campos requeridos y tipos de datos en cada operación.",
             "dependencies": [],
             "details": "- GET /api/tasks: listar tareas del usuario\n- POST /api/tasks: crear tarea con validación de campos\n- PUT /api/tasks/:id: actualizar tarea con validación\n- DELETE /api/tasks/:id: eliminar tarea\n- Validar datos de entrada para evitar errores y asegurar integridad",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:34:17.437Z"
           },
           {
             "id": 2,
@@ -208,9 +220,10 @@
               "4.1"
             ],
             "details": "- Añadir parámetros de consulta para filtros (estado, fecha, prioridad, etc.)\n- Implementar paginación con parámetros de página y tamaño\n- Optimizar consultas para manejar grandes volúmenes de datos",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:36:06.240Z"
           },
           {
             "id": 3,
@@ -221,14 +234,16 @@
               "4.2"
             ],
             "details": "- Establecer formato estándar para respuestas exitosas y errores\n- Manejar errores comunes como datos inválidos, recursos no encontrados y fallos internos\n- Probar respuestas para asegurar consistencia y claridad en la comunicación con el cliente",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-09-30T23:39:08.444Z"
           }
-        ]
+        ],
+        "updatedAt": "2025-09-30T23:39:08.444Z"
       },
       {
-        "id": "5",
+        "id": 5,
         "title": "Implementar priorización con Gemini API",
         "description": "Integrar Gemini API para ordenar tareas según calendario, tiempo estimado y energía",
         "details": "- Crear servicio GeminiService con método prioritizeTasks()\n- Construir prompt con contexto del usuario y tareas pendientes\n- Parsear respuesta JSON de Gemini con orden y justificaciones\n- Cachear resultados por 1 hora para optimizar costos\n- Implementar retry con backoff exponencial",
@@ -237,7 +252,7 @@
         "dependencies": [
           "4"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -245,7 +260,7 @@
             "description": "Definir la estructura del servicio GeminiService incluyendo el método prioritizeTasks(), asegurando manejo robusto de errores para llamadas a la API externa.",
             "dependencies": [],
             "details": "Crear la clase o módulo GeminiService que encapsule la lógica de integración con Gemini API. Implementar manejo de excepciones para errores de red, respuestas inválidas y fallos de la API. Definir interfaz clara para recibir tareas y contexto del usuario.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -257,7 +272,7 @@
               "5.1"
             ],
             "details": "Diseñar la plantilla del prompt que integre información del calendario, tiempo estimado y nivel de energía. Asegurar que el prompt sea claro y optimizado para obtener respuestas útiles y justificadas de Gemini.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -269,7 +284,7 @@
               "5.2"
             ],
             "details": "Crear funciones que validen la estructura del JSON recibido, manejen posibles errores de formato y extraigan los datos necesarios para la priorización. Garantizar que el sistema no falle ante respuestas inesperadas.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -281,7 +296,7 @@
               "5.3"
             ],
             "details": "Configurar almacenamiento temporal de resultados con expiración automática a 1 hora. Definir cuándo invalidar la caché ante cambios en las tareas o contexto del usuario para mantener datos actualizados.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -293,14 +308,14 @@
               "5.1"
             ],
             "details": "Configurar mecanismo que detecte fallos en la llamada a la API y realice reintentos con intervalos crecientes. Limitar número máximo de intentos para evitar ciclos infinitos y manejar adecuadamente los errores persistentes.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           }
         ]
       },
       {
-        "id": "6",
+        "id": 6,
         "title": "Desarrollar verificación por imagen",
         "description": "Implementar análisis de imágenes con Gemini Pro Vision para validar completitud de tareas",
         "details": "- Endpoint POST /api/tasks/:id/verify - recibe imagen base64\n- Llamar Gemini Vision con prompt de evaluación estricta\n- Parsear respuesta para obtener porcentaje y feedback\n- Guardar imagen y resultado en S3/CloudStorage\n- Actualizar estado de tarea según umbral de completitud",
@@ -309,7 +324,7 @@
         "dependencies": [
           "4"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -317,7 +332,7 @@
             "description": "Implementar endpoint POST /api/tasks/:id/verify para recibir imágenes en base64",
             "dependencies": [],
             "details": "Endpoint debe recibir imagen base64 y prepararla para análisis",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -329,7 +344,7 @@
               "6.1"
             ],
             "details": "Usar API key de Gemini y configurar prompt para análisis de imágenes",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -341,7 +356,7 @@
               "6.2"
             ],
             "details": "Prompt debe ser claro y enfocado en la evaluación de completitud",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -353,7 +368,7 @@
               "6.3"
             ],
             "details": "Configurar bucket en S3 o Cloud Storage para almacenar imágenes y resultados",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -365,7 +380,7 @@
               "6.4"
             ],
             "details": "Implementar lógica para actualizar el estado de la tarea basado en el resultado del análisis",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -377,14 +392,14 @@
               "6.5"
             ],
             "details": "Implementar validaciones y procesos para manejar variados formatos y tamaños de imagen",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           }
         ]
       },
       {
-        "id": "7",
+        "id": 7,
         "title": "Crear sistema de notificaciones push",
         "description": "Implementar notificaciones web/móvil con tono exigente para recordatorios",
         "details": "- Integrar Web Push API para navegadores compatibles\n- Crear plantillas de notificaciones con tono estricto\n- Programar notificaciones según cronograma de tareas\n- Implementar endpoint para gestionar preferencias de notificación\n- Manejar casos de rechazo de permisos",
@@ -401,7 +416,7 @@
             "description": "Integrar la API de Web Push para navegadores compatibles y manejar la solicitud y rechazo de permisos de notificación por parte del usuario.",
             "dependencies": [],
             "details": "Investigar compatibilidad de navegadores y dispositivos, implementar suscripción a notificaciones push, gestionar tokens y permisos, y manejar casos de rechazo o revocación de permisos.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -442,7 +457,7 @@
         ]
       },
       {
-        "id": "8",
+        "id": 8,
         "title": "Desarrollar sistema de gamificación",
         "description": "Implementar rachas, puntos y penalizaciones funcionales",
         "details": "- Calcular racha diaria basada en completitud de tareas\n- Asignar puntos por tareas completadas y verificadas\n- Aplicar penalizaciones: deshabilitar features UI por 24h\n- Crear endpoint GET /api/gamification/status\n- Implementar lógica de recuperación de racha tras penalización",
@@ -502,7 +517,7 @@
         ]
       },
       {
-        "id": "9",
+        "id": 9,
         "title": "Crear diálogo de retroalimentación con IA",
         "description": "Implementar chat conversacional post-día con IA para análisis de rendimiento",
         "details": "- Endpoint POST /api/feedback - inicia conversación\n- Mantener contexto de conversación en sesión\n- Guardar historial completo en IALog\n- Implementar límite de 10 mensajes por sesión\n- Incluir análisis de tareas falladas y sugerencias",
@@ -517,7 +532,7 @@
             "description": "Crear endpoint POST /api/feedback para iniciar conversaciones",
             "dependencies": [],
             "details": "Implementar lógica para recibir y procesar mensajes iniciales de usuario",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -529,7 +544,7 @@
               "9.1"
             ],
             "details": "Implementar almacenamiento de mensajes y contexto en sesión",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -541,7 +556,7 @@
               "9.2"
             ],
             "details": "Crear prompts para Gemini y procesar respuestas",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -553,7 +568,7 @@
               "9.3"
             ],
             "details": "Desarrollar lógica para limitar mensajes y gestionar flujo conversacional",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           },
@@ -565,14 +580,14 @@
               "9.4"
             ],
             "details": "Implementar sistema para almacenar y recuperar historial de conversaciones",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "",
             "parentId": "undefined"
           }
         ]
       },
       {
-        "id": "10",
+        "id": 10,
         "title": "Desarrollar interfaz de usuario minimalista",
         "description": "Crear UI responsive con React y Tailwind siguiendo principios de diseño minimalista",
         "details": "- Implementar dashboard principal con lista de tareas priorizadas\n- Crear formularios para CRUD de tareas con validación client-side\n- Desarrollar componente de carga de imagen para verificación\n- Implementar indicadores visuales de racha y penalizaciones\n- Asegurar cumplimiento WCAG 2.1 Level AA",
@@ -644,12 +659,15 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-09-30T23:19:00.460Z",
+      "lastModified": "2025-09-30T23:56:32.512Z",
       "taskCount": 10,
-      "completedCount": 0,
+      "completedCount": 3,
       "tags": [
         "master"
-      ]
+      ],
+      "created": "2025-10-01T00:00:03.002Z",
+      "description": "Tasks for master context",
+      "updated": "2025-10-01T01:16:45.570Z"
     }
   }
 }

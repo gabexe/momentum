@@ -1,11 +1,14 @@
 const express = require('express');
+
 const tasksRouter = require('./api/tasks');
 const authRouter = require('./api/auth');
+const pushRouter = require('./api/push');
 const app = express();
 
 app.use(express.json());
 app.use('/api/tasks', tasksRouter);
 app.use('/auth', authRouter);
+app.use('/api/push', pushRouter);
 
 // Middleware de manejo de errores
 app.use((err, req, res, next) => {
